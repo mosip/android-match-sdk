@@ -37,6 +37,7 @@ dependencies {
     implementation group: 'io.mosip.kernel', name: 'kernel-core', version: '1.2.0.1'
     implementation group: 'io.mosip.biometric.util', name: 'biometrics-util', version: '1.2.0.2'
     implementation group: 'io.mosip.kernel', name: 'kernel-biometrics-api', version: '1.2.0.2'
+    implementation 'io.mosip.kernel:kernel-cbeffutil-api:1.2.0.2'
     implementation 'org.slf4j:slf4j-api:1.7.30'
 
     implementation 'com.google.dagger:dagger:2.41'
