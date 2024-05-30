@@ -3,6 +3,8 @@ package io.mosip.registration.matchsdk;
 import static java.lang.Integer.parseInt;
 
 
+import android.util.Log;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,6 +50,10 @@ public class MatchSDKTest {
     private String testMatchSDKMatchPath = "";
     private String testFaceNoMatchPath = "";
     private String testFingerNoMatchPath = "";
+    private String testFingerPath = "";
+    private String testMoreFingersPath = "";
+    private String testNoSampleMatchPath = "";
+    private String testNoGalleryMatchPath = "";
 
     @Before
     public void Setup() {
@@ -56,6 +62,10 @@ public class MatchSDKTest {
         testMatchSDKMatchPath = Objects.requireNonNull(MatchSDKTest.class.getResource("/sample_files/test_sdk_match.xml")).getPath();
         testFaceNoMatchPath = Objects.requireNonNull(MatchSDKTest.class.getResource("/sample_files/test_sdk_face_no_match.xml")).getPath();
         testFingerNoMatchPath = Objects.requireNonNull(MatchSDKTest.class.getResource("/sample_files/test_sdk_finger_no_match.xml")).getPath();
+        testFingerPath = Objects.requireNonNull(MatchSDKTest.class.getResource("/sample_files/test_sdk_finger.xml")).getPath();
+        testMoreFingersPath = Objects.requireNonNull(MatchSDKTest.class.getResource("/sample_files/test_sdk_more_fingers.xml")).getPath();
+        testNoSampleMatchPath = Objects.requireNonNull(MatchSDKTest.class.getResource("/sample_files/test_sdk_no_matching_sample.xml")).getPath();
+        testNoGalleryMatchPath = Objects.requireNonNull(MatchSDKTest.class.getResource("/sample_files/test_sdk_no_matching_gallery.xml")).getPath();
     }
 
     @Test
@@ -138,6 +148,171 @@ public class MatchSDKTest {
         }
     }
 
+    /**
+     * sampleSegments: 6 -- gallerySegments: 7
+     */
+    @Test
+    public void no_match_sample_and_gallery_record() {
+        try {
+            List<BiometricType> modalitiesToMatch = new ArrayList<BiometricType>(){{
+                add(BiometricType.FACE);
+                add(BiometricType.FINGER);
+                add(BiometricType.IRIS);
+            }};
+            BiometricRecord[] gallery = new BiometricRecord[1];
+            BiometricRecord sample_record = xmlFileToBiometricRecord(testNoSampleMatchPath);
+            BiometricRecord gallery0 = xmlFileToBiometricRecord(testNoGalleryMatchPath);
+
+            gallery[0] = gallery0;
+
+            MatchSDK sampleSDK = new MatchSDK();
+            Response<MatchDecision[]> response = sampleSDK.match(sample_record, gallery, modalitiesToMatch, new HashMap<>());
+            if (response != null && response.getResponse() != null)
+            {
+                for (int i=0; i< response.getResponse().length; i++){
+                    Map<BiometricType, Decision> decisions = response.getResponse()[i].getDecisions();
+                    //Assert.assertEquals(Objects.requireNonNull(decisions.get(BiometricType.FACE)).toString(), Objects.requireNonNull(decisions.get(BiometricType.FACE)).getMatch().toString(), Match.MATCHED.toString());
+                    Assert.assertEquals(Objects.requireNonNull(decisions.get(BiometricType.FINGER)).toString(),
+                            Objects.requireNonNull(decisions.get(BiometricType.FINGER)).getMatch().toString(),
+                            Match.NOT_MATCHED.toString());
+                   // Assert.assertEquals(Objects.requireNonNull(decisions.get(BiometricType.IRIS)).toString(), Objects.requireNonNull(decisions.get(BiometricType.IRIS)).getMatch().toString(), Match.MATCHED.toString());
+                }
+            }
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * sampleSegments: 2 -- gallerySegments: 10
+     */
+    @Test
+    public void match_with_less_fingers_sample_record() {
+        try {
+            List<BiometricType> modalitiesToMatch = new ArrayList<BiometricType>(){{
+                add(BiometricType.FACE);
+                add(BiometricType.FINGER);
+                add(BiometricType.IRIS);
+            }};
+            BiometricRecord[] gallery = new BiometricRecord[1];
+            BiometricRecord sample_record = xmlFileToBiometricRecord(testFingerPath);
+            BiometricRecord gallery0 = xmlFileToBiometricRecord(testMatchSDKMatchPath);
+
+            gallery[0] = gallery0;
+
+            MatchSDK sampleSDK = new MatchSDK();
+            Response<MatchDecision[]> response = sampleSDK.match(sample_record, gallery, modalitiesToMatch, new HashMap<>());
+            if (response != null && response.getResponse() != null)
+            {
+                for (int i=0; i< response.getResponse().length; i++){
+                    Map<BiometricType, Decision> decisions = response.getResponse()[i].getDecisions();
+                    Assert.assertEquals(Objects.requireNonNull(decisions.get(BiometricType.FACE)).toString(), Objects.requireNonNull(decisions.get(BiometricType.FACE)).getMatch().toString(), Match.MATCHED.toString());
+                    Assert.assertEquals(Objects.requireNonNull(decisions.get(BiometricType.FINGER)).toString(), Objects.requireNonNull(decisions.get(BiometricType.FINGER)).getMatch().toString(), Match.MATCHED.toString());
+                    Assert.assertEquals(Objects.requireNonNull(decisions.get(BiometricType.IRIS)).toString(), Objects.requireNonNull(decisions.get(BiometricType.IRIS)).getMatch().toString(), Match.MATCHED.toString());
+                }
+            }
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * sampleSegments: 12 -- gallerySegments: 10
+     */
+    @Test
+    public void match_with_more_fingers_sample_record() {
+        try {
+            List<BiometricType> modalitiesToMatch = new ArrayList<BiometricType>(){{
+                add(BiometricType.FACE);
+                add(BiometricType.FINGER);
+                add(BiometricType.IRIS);
+            }};
+            BiometricRecord[] gallery = new BiometricRecord[1];
+            BiometricRecord sample_record = xmlFileToBiometricRecord(testMoreFingersPath);
+            BiometricRecord gallery0 = xmlFileToBiometricRecord(testMatchSDKMatchPath);
+
+            gallery[0] = gallery0;
+
+            MatchSDK sampleSDK = new MatchSDK();
+            Response<MatchDecision[]> response = sampleSDK.match(sample_record, gallery, modalitiesToMatch, new HashMap<>());
+            if (response != null && response.getResponse() != null)
+            {
+                for (int i=0; i< response.getResponse().length; i++){
+                    Map<BiometricType, Decision> decisions = response.getResponse()[i].getDecisions();
+                    Assert.assertEquals(Objects.requireNonNull(decisions.get(BiometricType.FACE)).toString(), Objects.requireNonNull(decisions.get(BiometricType.FACE)).getMatch().toString(), Match.MATCHED.toString());
+                    Assert.assertEquals(Objects.requireNonNull(decisions.get(BiometricType.FINGER)).toString(), Objects.requireNonNull(decisions.get(BiometricType.FINGER)).getMatch().toString(), Match.MATCHED.toString());
+                    Assert.assertEquals(Objects.requireNonNull(decisions.get(BiometricType.IRIS)).toString(), Objects.requireNonNull(decisions.get(BiometricType.IRIS)).getMatch().toString(), Match.MATCHED.toString());
+                }
+            }
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * sampleSegments: 12 -- gallerySegments: 10
+     */
+    @Test
+    public void match_with_more_fingers_gallery_record() {
+        try {
+            List<BiometricType> modalitiesToMatch = new ArrayList<BiometricType>(){{
+                add(BiometricType.FACE);
+                add(BiometricType.FINGER);
+                add(BiometricType.IRIS);
+            }};
+            BiometricRecord[] gallery = new BiometricRecord[1];
+            BiometricRecord sample_record = xmlFileToBiometricRecord(testMatchSDKPath);
+            BiometricRecord gallery0 = xmlFileToBiometricRecord(testMoreFingersPath);
+
+            gallery[0] = gallery0;
+
+            MatchSDK sampleSDK = new MatchSDK();
+            Response<MatchDecision[]> response = sampleSDK.match(sample_record, gallery, modalitiesToMatch, new HashMap<>());
+            if (response != null && response.getResponse() != null)
+            {
+                for (int i=0; i< response.getResponse().length; i++){
+                    Map<BiometricType, Decision> decisions = response.getResponse()[i].getDecisions();
+                    Assert.assertEquals(Objects.requireNonNull(decisions.get(BiometricType.FACE)).toString(), Objects.requireNonNull(decisions.get(BiometricType.FACE)).getMatch().toString(), Match.MATCHED.toString());
+                    Assert.assertEquals(Objects.requireNonNull(decisions.get(BiometricType.FINGER)).toString(), Objects.requireNonNull(decisions.get(BiometricType.FINGER)).getMatch().toString(), Match.MATCHED.toString());
+                    Assert.assertEquals(Objects.requireNonNull(decisions.get(BiometricType.IRIS)).toString(), Objects.requireNonNull(decisions.get(BiometricType.IRIS)).getMatch().toString(), Match.MATCHED.toString());
+                }
+            }
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * sampleSegments: 10 -- gallerySegments: 2
+     */
+    @Test
+    public void match_with_less_fingers_gallery_record() {
+        try {
+            List<BiometricType> modalitiesToMatch = new ArrayList<BiometricType>(){{
+                add(BiometricType.FACE);
+                add(BiometricType.FINGER);
+                add(BiometricType.IRIS);
+            }};
+            BiometricRecord[] gallery = new BiometricRecord[1];
+            BiometricRecord sample_record = xmlFileToBiometricRecord(testMatchSDKPath);
+            BiometricRecord gallery0 = xmlFileToBiometricRecord(testFingerPath);
+
+            gallery[0] = gallery0;
+
+            MatchSDK sampleSDK = new MatchSDK();
+            Response<MatchDecision[]> response = sampleSDK.match(sample_record, gallery, modalitiesToMatch, new HashMap<>());
+            if (response != null && response.getResponse() != null)
+            {
+                for (int i=0; i< response.getResponse().length; i++){
+                    Map<BiometricType, Decision> decisions = response.getResponse()[i].getDecisions();
+                    Assert.assertEquals(Objects.requireNonNull(decisions.get(BiometricType.FACE)).toString(), Objects.requireNonNull(decisions.get(BiometricType.FACE)).getMatch().toString(), Match.MATCHED.toString());
+                    Assert.assertEquals(Objects.requireNonNull(decisions.get(BiometricType.FINGER)).toString(), Objects.requireNonNull(decisions.get(BiometricType.FINGER)).getMatch().toString(), Match.MATCHED.toString());
+                    Assert.assertEquals(Objects.requireNonNull(decisions.get(BiometricType.IRIS)).toString(), Objects.requireNonNull(decisions.get(BiometricType.IRIS)).getMatch().toString(), Match.MATCHED.toString());
+                }
+            }
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
+        }
+    }
     @Test
     public void match_same_finger() {
         try {
