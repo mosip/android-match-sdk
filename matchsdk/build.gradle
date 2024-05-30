@@ -1,7 +1,20 @@
 plugins {
     id 'com.android.library'
+    id 'maven-publish'
 }
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = 'io.mosip.registration.matchsdk'
+            artifactId = 'matchsdk'
+            version = '1.0'
 
+            afterEvaluate {
+                from components.findByName('release')
+            }
+        }
+    }
+}
 android {
     namespace 'io.mosip.registration.matchsdk'
     compileSdk 34
