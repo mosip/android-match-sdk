@@ -8,7 +8,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.CollectionUtils;
+
 
 import io.mosip.kernel.biometrics.constant.BiometricType;
 import io.mosip.kernel.biometrics.constant.Match;
@@ -394,11 +394,11 @@ public class MatchService extends SDKService{
                 break;
 
             boolean bio_found = false;
-            if (!CollectionUtils.isEmpty(sampleBIR.getBdbInfo().getType())
+            if (sampleBIR.getBdbInfo().getType() != null && !sampleBIR.getBdbInfo().getType().isEmpty()
                     && sampleBIR.getBdbInfo().getType().get(0).equals(BiometricType.FACE)) {
                 LOGGER.info("SampleBIR Value check"+ sampleBIR.getBdbInfo().getSubtype());
                 for (BIR galleryBIR : gallerySegments) {
-                    if (!CollectionUtils.isEmpty(galleryBIR.getBdbInfo().getType())
+                    if (galleryBIR.getBdbInfo().getType() != null && !galleryBIR.getBdbInfo().getType().isEmpty()
                             && galleryBIR.getBdbInfo().getType().get(0).equals(BiometricType.FACE)) {
                         if (Util.compareHash(galleryBIR.getBdb(), sampleBIR.getBdb())) {
                             LOGGER.info("Modality: {}; Subtype: {} -- matched", BiometricType.FACE.value(),
