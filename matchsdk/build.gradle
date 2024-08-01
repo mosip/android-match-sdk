@@ -1,0 +1,60 @@
+plugins {
+    id 'com.android.library'
+   // id 'maven-publish'
+}
+/*publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = 'io.mosip.registration.matchsdk'
+            artifactId = 'matchsdk'
+            version = '1.0'
+
+            afterEvaluate {
+                from components.findByName('release')
+            }
+        }
+    }
+}*/
+android {
+    namespace 'io.mosip.registration.matchsdk'
+    compileSdk 31
+
+    defaultConfig {
+        minSdk 28
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.google.android.material:material:1.4.0'
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    implementation group: 'io.mosip.kernel', name: 'kernel-core', version: '1.2.0.1'
+    implementation group: 'io.mosip.biometric.util', name: 'biometrics-util', version: '1.2.0.2'
+    implementation group: 'io.mosip.kernel', name: 'kernel-biometrics-api', version: '1.2.0.2'
+    implementation 'io.mosip.kernel:kernel-cbeffutil-api:1.2.0.2'
+    implementation 'org.slf4j:slf4j-api:2.0.0-alpha7'
+
+    implementation 'com.google.dagger:dagger:2.41'
+    implementation 'com.google.dagger:dagger-android-support:2.41'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.41'
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.41'
+}
