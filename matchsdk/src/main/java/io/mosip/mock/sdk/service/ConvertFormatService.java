@@ -52,7 +52,7 @@ public class ConvertFormatService extends SDKService{
             for (BIR segment : sample.getSegments()) {
 
                 if (!isValidBirData(segment))
-                    break;
+                    continue;
 
                 BiometricType bioType = segment.getBdbInfo().getType().get(0);
                 List<String> bioSubTypeList = segment.getBdbInfo().getSubtype();

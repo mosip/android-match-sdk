@@ -172,18 +172,6 @@ public class MatchService extends SDKService{
             return decision;
         }
 
-        LOGGER.info("sampleSegments: {} -- gallerySegments: {}", sampleSegments.size(), gallerySegments.size());
-        if (sampleSegments.isEmpty()) {
-            LOGGER.info("Modality: {} -- biometric list empty in sample", BiometricType.FINGER.value());
-            decision.setMatch(Match.NOT_MATCHED);
-            return decision;
-        }
-        if (gallerySegments.isEmpty()) {
-            LOGGER.info("Modality: {} -- biometric list empty in gallery", BiometricType.FINGER.value());
-            decision.setMatch(Match.NOT_MATCHED);
-            return decision;
-        }
-
         for (BIR sampleBIR : sampleSegments) {
             if (!isValidBirData(sampleBIR))
                 break;
@@ -343,8 +331,6 @@ public class MatchService extends SDKService{
                 LOGGER.info("Modality: {} ; Subtype: {}  -- not found", BiometricType.IRIS.value(),
                         sampleBIR.getBdbInfo().getSubtype());
                 matched.add(false);
-            } else {
-                break;
             }
         }
 

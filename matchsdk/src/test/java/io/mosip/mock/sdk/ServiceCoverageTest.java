@@ -105,16 +105,16 @@ public class ServiceCoverageTest {
         Assert.assertTrue(response.getResponse().getScores().containsKey(BiometricType.SCENT));
     }
 
-    // catch(Exception) arm: null quality causes NPE in getAvgQualityScore
+    // null quality on segment → getAvgQualityScore throws POOR_DATA_QUALITY SDKException
     @Test
-    public void checkQuality_nullQualityOnSegment_catchesNpeReturnsUnknownError() {
+    public void checkQuality_nullQualityOnSegment_returnsPoorDataQuality() {
         BiometricRecord record = buildRecord(BiometricType.FINGER, "Left IndexFinger", new byte[]{1});
         CheckQualityService svc = new CheckQualityService(
                 record, Collections.singletonList(BiometricType.FINGER), new HashMap<>()) {
             @Override protected boolean isValidBirData(BIR bir) { return true; }
         };
         Response<QualityCheck> response = svc.getCheckQualityInfo();
-        Assert.assertEquals(ResponseStatus.UNKNOWN_ERROR.getStatusCode(),
+        Assert.assertEquals(ResponseStatus.POOR_DATA_QUALITY.getStatusCode(),
                 (int) response.getStatusCode());
     }
 

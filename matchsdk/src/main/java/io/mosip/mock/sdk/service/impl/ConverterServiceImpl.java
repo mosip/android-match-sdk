@@ -109,7 +109,13 @@ public class ConverterServiceImpl implements IConverterApi {
             case FingerImageCompressionType.JPEG_2000_LOSS_LESS:
                 try {
                     outImage = BitmapFactory.decodeByteArray(inImageData, 0, inImageData.length);
+                    if (outImage == null) {
+                        errorCode = ConverterErrorCode.COULD_NOT_READ_ISO_IMAGE_DATA_EXCEPTION;
+                        throw new ConversionException(errorCode.getErrorCode(), "Failed to decode finger image data");
+                    }
                     // change here outImage width, height, dpi here based on targetParameters
+                } catch (ConversionException e) {
+                    throw e;
                 } catch (Exception e) {
                     errorCode = ConverterErrorCode.COULD_NOT_READ_ISO_IMAGE_DATA_EXCEPTION;
                     throw new ConversionException (errorCode.getErrorCode(), e.getLocalizedMessage());
@@ -178,7 +184,13 @@ public class ConverterServiceImpl implements IConverterApi {
             case ImageDataType.JPEG2000_LOSS_LESS:
                 try {
                     outImage = BitmapFactory.decodeByteArray(inImageData, 0, inImageData.length);
+                    if (outImage == null) {
+                        errorCode = ConverterErrorCode.COULD_NOT_READ_ISO_IMAGE_DATA_EXCEPTION;
+                        throw new ConversionException(errorCode.getErrorCode(), "Failed to decode face image data");
+                    }
                     // change here outImage width, height, dpi here based on targetParameters
+                } catch (ConversionException e) {
+                    throw e;
                 } catch (Exception e) {
                     errorCode = ConverterErrorCode.COULD_NOT_READ_ISO_IMAGE_DATA_EXCEPTION;
                     throw new ConversionException (errorCode.getErrorCode(), e.getLocalizedMessage());
@@ -222,7 +234,13 @@ public class ConverterServiceImpl implements IConverterApi {
             try {
                 // outImage = ImageIO.read(new ByteArrayInputStream(inImageData));
                 bitmap = BitmapFactory.decodeByteArray(inImageData, 0, inImageData.length);
+                if (bitmap == null) {
+                    errorCode = ConverterErrorCode.COULD_NOT_READ_ISO_IMAGE_DATA_EXCEPTION;
+                    throw new ConversionException(errorCode.getErrorCode(), "Failed to decode iris image data");
+                }
                 // change here outImage width, height, dpi here based on targetParameters
+            } catch (ConversionException e) {
+                throw e;
             } catch (Exception e) {
                 errorCode = ConverterErrorCode.COULD_NOT_READ_ISO_IMAGE_DATA_EXCEPTION;
                 throw new ConversionException(errorCode.getErrorCode(), e.getLocalizedMessage());

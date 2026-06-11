@@ -57,8 +57,13 @@ public abstract class SDKService {
 
     protected Map<BiometricType, List<BIR>> getBioSegmentMap(BiometricRecord record,
                                                              List<BiometricType> modalitiesToMatch) {
-        LOGGER.info("getBioSegmentMap>>" +  modalitiesToMatch.toString());
-        boolean noFilter = modalitiesToMatch.isEmpty();
+        if (record == null || record.getSegments() == null) {
+            ResponseStatus status = ResponseStatus.MISSING_INPUT;
+            throw new SDKException(String.valueOf(status.getStatusCode()), status.getStatusMessage());
+        }
+        List<BiometricType> requested = (modalitiesToMatch == null) ? new ArrayList<>() : modalitiesToMatch;
+        LOGGER.info("getBioSegmentMap>>{}", requested);
+        boolean noFilter = requested.isEmpty();
 
         Map<BiometricType, List<BIR>> bioSegmentMap = new HashMap<>();
         for (BIR segment : record.getSegments()) {
@@ -66,7 +71,7 @@ public abstract class SDKService {
 
             // ignore modalities that are not to be matched
 
-            if (!noFilter && !modalitiesToMatch.contains(bioType))
+            if (!noFilter && !requested.contains(bioType))
                 continue;
 
             if (!bioSegmentMap.containsKey(bioType)) {
@@ -79,6 +84,12 @@ public abstract class SDKService {
     }
 
     protected boolean isValidBirData(BIR bir) {
+        if (bir.getBdbInfo() == null
+                || bir.getBdbInfo().getType() == null
+                || bir.getBdbInfo().getType().isEmpty()) {
+            ResponseStatus status = ResponseStatus.INVALID_INPUT;
+            throw new SDKException(String.valueOf(status.getStatusCode()), status.getStatusMessage());
+        }
         BiometricType biometricType = bir.getBdbInfo().getType().get(0);
         PurposeType purposeType = bir.getBdbInfo().getPurpose();
         List<String> bioSubTypeList = bir.getBdbInfo().getSubtype();
@@ -105,7 +116,7 @@ public abstract class SDKService {
             case FACE:
                 break;
             case FINGER:
-                if (!(bioSubType.equals("UNKNOWN") || bioSubType.equals("Left IndexFinger")
+                if (bioSubType == null || !(bioSubType.equals("UNKNOWN") || bioSubType.equals("Left IndexFinger")
                         || bioSubType.equals("Left RingFinger") || bioSubType.equals("Left MiddleFinger")
                         || bioSubType.equals("Left LittleFinger") || bioSubType.equals("Left Thumb")
                         || bioSubType.equals("Right IndexFinger") || bioSubType.equals("Right RingFinger")
@@ -117,7 +128,7 @@ public abstract class SDKService {
                 }
                 break;
             case IRIS:
-                if (!(bioSubType.equals("UNKNOWN") || bioSubType.equals("Left") || bioSubType.equals("Right"))) {
+                if (bioSubType == null || !(bioSubType.equals("UNKNOWN") || bioSubType.equals("Left") || bioSubType.equals("Right"))) {
                     LOGGER.error("isValidBIRParams>>BiometricType#" + bioType + ">>BioSubType#" + bioSubType);
                     responseStatus = ResponseStatus.MISSING_INPUT;
                     throw new SDKException(String.valueOf(responseStatus.getStatusCode()), responseStatus.getStatusMessage());
@@ -740,8 +751,8 @@ public abstract class SDKService {
                 isValid = false;
             }
 
-            if (!FaceISOStandardsValidator.getInstance().isValidRepresentationLength(bdir.getRecordLength())) {
-                message.append("<BR>Invalid Representation Length for Face Modality, expected values between[0x00000033 and 0xFFFFFFEF], but received input value[").append(String.format("0x%08X", bdir.getRecordLength())).append("]");
+            if (!FaceISOStandardsValidator.getInstance().isValidRepresentationLength(bdir.getRepresentationsLength())) {
+                message.append("<BR>Invalid Representation Length for Face Modality, expected values between[0x00000033 and 0xFFFFFFEF], but received input value[").append(String.format("0x%08X", bdir.getRepresentationsLength())).append("]");
                 isValid = false;
             }
 

@@ -162,12 +162,18 @@ public class CheckQualityService extends SDKService{
     }
 
     private float getAvgQualityScore(List<BIR> segments) {
+        if (segments.isEmpty()) {
+            ResponseStatus status = ResponseStatus.POOR_DATA_QUALITY;
+            throw new SDKException(String.valueOf(status.getStatusCode()), status.getStatusMessage());
+        }
         float qualityScore = 0;
         for (BIR bir : segments) {
-
-            qualityScore += (bir.getBdbInfo().getQuality().getScore());
+            if (bir.getBdbInfo() == null || bir.getBdbInfo().getQuality() == null) {
+                ResponseStatus status = ResponseStatus.POOR_DATA_QUALITY;
+                throw new SDKException(String.valueOf(status.getStatusCode()), status.getStatusMessage());
+            }
+            qualityScore += bir.getBdbInfo().getQuality().getScore();
         }
-
         return qualityScore / segments.size();
     }
 }
