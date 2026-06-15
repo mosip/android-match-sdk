@@ -240,7 +240,6 @@ public class MatchService extends SDKService{
                 matched.add(false);
             }
         }
-
         if (matched.size() > 0) {
             if (matched.contains(true)) {
                 decision.setMatch(Match.MATCHED);
