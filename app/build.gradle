@@ -3,11 +3,10 @@ plugins {
 }
 
 android {
-    namespace 'io.mosip.registration.matchsdk'
+    namespace 'io.mosip.mock.sdk'
     compileSdk 31
 
     defaultConfig {
-        applicationId "io.mosip.registration.matchsdk"
         minSdk 28
         targetSdk 31
         versionCode 1

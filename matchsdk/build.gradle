@@ -16,7 +16,7 @@ plugins {
     }
 }*/
 android {
-    namespace 'io.mosip.registration.matchsdk'
+    namespace 'io.mosip.mock.sdk'
     compileSdk 31
 
     defaultConfig {
@@ -27,6 +27,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            testCoverageEnabled true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -57,4 +60,18 @@ dependencies {
     implementation 'com.google.dagger:dagger-android-support:2.41'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.41'
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.41'
+}
+
+apply plugin: 'jacoco'
+
+task jacocoUnitTestReport(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
+    reports {
+        xml.required = true
+        html.required = true
+    }
+    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*',
+                      'android/**/*.*', '**/constant/**', '**/exception/**', '**/service/impl/**']
+    sourceDirectories.setFrom(files(["${project.projectDir}/src/main/java"]))
+    classDirectories.setFrom(files([fileTree(dir: "${buildDir}/intermediates/javac/debug/classes", excludes: fileFilter)]))
+    executionData.setFrom(fileTree(dir: buildDir, includes: ['outputs/unit_test_code_coverage/debugUnitTest/*.exec']))
 }
