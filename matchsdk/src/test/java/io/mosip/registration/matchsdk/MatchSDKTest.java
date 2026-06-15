@@ -171,11 +171,9 @@ public class MatchSDKTest {
             {
                 for (int i=0; i< response.getResponse().length; i++){
                     Map<BiometricType, Decision> decisions = response.getResponse()[i].getDecisions();
-                    //Assert.assertEquals(Objects.requireNonNull(decisions.get(BiometricType.FACE)).toString(), Objects.requireNonNull(decisions.get(BiometricType.FACE)).getMatch().toString(), Match.MATCHED.toString());
                     Assert.assertEquals(Objects.requireNonNull(decisions.get(BiometricType.FINGER)).toString(),
                             Objects.requireNonNull(decisions.get(BiometricType.FINGER)).getMatch().toString(),
                             Match.NOT_MATCHED.toString());
-                   // Assert.assertEquals(Objects.requireNonNull(decisions.get(BiometricType.IRIS)).toString(), Objects.requireNonNull(decisions.get(BiometricType.IRIS)).getMatch().toString(), Match.MATCHED.toString());
                 }
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
