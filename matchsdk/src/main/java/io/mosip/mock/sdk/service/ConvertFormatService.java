@@ -147,7 +147,7 @@ public class ConvertFormatService extends SDKService{
                     return response;
             }
         } catch (ConversionException ex) {
-            LOGGER.error("convertFormat -- error"+ex);
+            LOGGER.error("convertFormat -- error", ex);
             switch (ConverterErrorCode.fromErrorCode(ex.getErrorCode())) {
                 case INPUT_SOURCE_EXCEPTION:
                 case INVALID_REQUEST_EXCEPTION:
