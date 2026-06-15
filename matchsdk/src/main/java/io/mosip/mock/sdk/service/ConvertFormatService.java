@@ -79,6 +79,9 @@ public class ConvertFormatService extends SDKService{
             List<BIR> birList = sample.getSegments();
             for (int index = 0; index < birList.size(); index++) {
                 BIR segment = birList.get(index);
+                if (segment.getBdbInfo() == null || segment.getBdbInfo().getType() == null
+                        || segment.getBdbInfo().getType().isEmpty())
+                    continue;
                 BiometricType bioType = segment.getBdbInfo().getType().get(0);
                 List<String> bioSubTypeList = segment.getBdbInfo().getSubtype();
                 String bioSubType = null;

@@ -67,6 +67,9 @@ public abstract class SDKService {
 
         Map<BiometricType, List<BIR>> bioSegmentMap = new HashMap<>();
         for (BIR segment : record.getSegments()) {
+            if (segment.getBdbInfo() == null || segment.getBdbInfo().getType() == null
+                    || segment.getBdbInfo().getType().isEmpty())
+                continue;
             BiometricType bioType = segment.getBdbInfo().getType().get(0);
 
             // ignore modalities that are not to be matched
