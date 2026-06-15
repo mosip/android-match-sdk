@@ -1,0 +1,46 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    namespace 'io.mosip.registration.matchsdk'
+    compileSdk 34
+
+    defaultConfig {
+        minSdk 28
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.12.0'
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    implementation group: 'io.mosip.kernel', name: 'kernel-core', version: '1.2.0.1'
+    implementation group: 'io.mosip.biometric.util', name: 'biometrics-util', version: '1.2.0.2'
+    implementation group: 'io.mosip.kernel', name: 'kernel-biometrics-api', version: '1.2.0.2'
+    implementation 'org.slf4j:slf4j-api:1.7.30'
+
+    implementation 'com.google.dagger:dagger:2.41'
+    implementation 'com.google.dagger:dagger-android-support:2.41'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.41'
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.41'
+}
