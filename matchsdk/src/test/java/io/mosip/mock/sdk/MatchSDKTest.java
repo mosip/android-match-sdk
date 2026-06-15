@@ -88,7 +88,7 @@ public class MatchSDKTest {
                 }
             }
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -112,7 +112,7 @@ public class MatchSDKTest {
                 }
             }
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -142,7 +142,7 @@ public class MatchSDKTest {
                 }
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -168,7 +168,7 @@ public class MatchSDKTest {
                 }
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -198,7 +198,7 @@ public class MatchSDKTest {
                 }
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -228,7 +228,7 @@ public class MatchSDKTest {
                 }
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -258,7 +258,7 @@ public class MatchSDKTest {
                 }
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -288,7 +288,7 @@ public class MatchSDKTest {
                 }
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -312,7 +312,7 @@ public class MatchSDKTest {
                 }
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -336,7 +336,7 @@ public class MatchSDKTest {
                 }
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -360,7 +360,7 @@ public class MatchSDKTest {
                 }
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -384,7 +384,7 @@ public class MatchSDKTest {
                 }
             }
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -430,7 +430,7 @@ public class MatchSDKTest {
             Assert.assertNotNull(decisions);
             Assert.assertEquals(Match.NOT_MATCHED, decisions[0].getDecisions().get(BiometricType.FINGER).getMatch());
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -453,7 +453,7 @@ public class MatchSDKTest {
             Assert.assertNotNull(decisions);
             Assert.assertEquals(Match.NOT_MATCHED, decisions[0].getDecisions().get(BiometricType.IRIS).getMatch());
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -476,7 +476,7 @@ public class MatchSDKTest {
             Assert.assertNotNull(decisions);
             Assert.assertEquals(Match.NOT_MATCHED, decisions[0].getDecisions().get(BiometricType.FACE).getMatch());
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -504,7 +504,7 @@ public class MatchSDKTest {
                         response.getResponse()[0].getDecisions().get(BiometricType.FINGER).getMatch());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -530,7 +530,7 @@ public class MatchSDKTest {
                         response.getResponse()[0].getDecisions().get(BiometricType.IRIS).getMatch());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -567,7 +567,7 @@ public class MatchSDKTest {
             Assert.assertNotNull(response);
             Assert.assertEquals(200, (int) response.getStatusCode());
         } catch (Exception e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -592,7 +592,7 @@ public class MatchSDKTest {
             Assert.assertNotNull(decisions);
             Assert.assertEquals(Match.MATCHED, decisions[0].getDecisions().get(BiometricType.FINGER).getMatch());
         } catch (Exception e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -615,7 +615,7 @@ public class MatchSDKTest {
             Assert.assertNotNull(decisions);
             Assert.assertEquals(Match.NOT_MATCHED, decisions[0].getDecisions().get(BiometricType.FINGER).getMatch());
         } catch (Exception e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -638,7 +638,7 @@ public class MatchSDKTest {
             Assert.assertNotNull(decisions);
             Assert.assertEquals(Match.MATCHED, decisions[0].getDecisions().get(BiometricType.IRIS).getMatch());
         } catch (Exception e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -661,7 +661,7 @@ public class MatchSDKTest {
             Assert.assertNotNull(decisions);
             Assert.assertEquals(Match.NOT_MATCHED, decisions[0].getDecisions().get(BiometricType.IRIS).getMatch());
         } catch (Exception e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 

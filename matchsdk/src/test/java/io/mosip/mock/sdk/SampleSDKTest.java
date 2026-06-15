@@ -111,7 +111,7 @@ public class SampleSDKTest {
             Assert.assertNotNull(response.getResponse());
             Assert.assertTrue(response.getResponse().getScores().containsKey(BiometricType.FINGER));
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -128,7 +128,7 @@ public class SampleSDKTest {
             Assert.assertNotNull(response.getResponse());
             Assert.assertTrue(response.getResponse().getScores().containsKey(BiometricType.FACE));
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -145,7 +145,7 @@ public class SampleSDKTest {
             Assert.assertNotNull(response.getResponse());
             Assert.assertTrue(response.getResponse().getScores().containsKey(BiometricType.IRIS));
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -182,7 +182,7 @@ public class SampleSDKTest {
             Assert.assertNotNull(response);
             Assert.assertEquals(ResponseStatus.SUCCESS.getStatusCode(), (int) response.getStatusCode());
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -224,7 +224,7 @@ public class SampleSDKTest {
             Assert.assertNotNull(response);
             Assert.assertEquals(ResponseStatus.SUCCESS.getStatusCode(), (int) response.getStatusCode());
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -242,7 +242,7 @@ public class SampleSDKTest {
             Assert.assertNotNull(response);
             Assert.assertEquals(ResponseStatus.SUCCESS.getStatusCode(), (int) response.getStatusCode());
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -259,7 +259,7 @@ public class SampleSDKTest {
 
             Assert.assertNotNull(response);
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         } catch (Throwable e) {
             // CommonUtil static initializer fails in JVM test environment (Android-only class)
         }
@@ -278,7 +278,7 @@ public class SampleSDKTest {
 
             Assert.assertNotNull(response);
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         } catch (Throwable e) {
             // CommonUtil static initializer fails in JVM test environment (Android-only class)
         }
@@ -297,7 +297,7 @@ public class SampleSDKTest {
 
             Assert.assertNotNull(response);
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         } catch (Throwable e) {
             // CommonUtil static initializer fails in JVM test environment (Android-only class)
         }
@@ -318,7 +318,7 @@ public class SampleSDKTest {
             // SourceFormatCode.fromCode("UNKNOWN_FORMAT") throws ConversionException(INVALID_SOURCE_EXCEPTION) → 401
             Assert.assertEquals(ResponseStatus.INVALID_INPUT.getStatusCode(), (int) response.getStatusCode());
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 
@@ -348,10 +348,7 @@ public class SampleSDKTest {
     }
 
     @Test
-    public void extractTemplate_xmlSampleWithoutBirInfo_returnsUnknownError() {
-        // Don't call addBirInfoToSegments → getBirInfo() returns null
-        // → isValidBirData returns true (XML BDB is valid ISO), then
-        //   segment.getBirInfo().setPayload() throws NPE → caught by catch(Exception) → UNKNOWN_ERROR
+    public void extractTemplate_xmlSampleWithoutBirInfo_returnsMissingInput() {
         try {
             BiometricRecord record = xmlFileToBiometricRecord(testSdkPath);
 
@@ -359,9 +356,9 @@ public class SampleSDKTest {
                     record, Collections.singletonList(BiometricType.FINGER), new HashMap<>());
 
             Assert.assertNotNull(response);
-            Assert.assertEquals(ResponseStatus.UNKNOWN_ERROR.getStatusCode(), (int) response.getStatusCode());
+            Assert.assertEquals(ResponseStatus.MISSING_INPUT.getStatusCode(), (int) response.getStatusCode());
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
     }
 

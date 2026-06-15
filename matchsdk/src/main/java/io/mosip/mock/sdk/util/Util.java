@@ -9,17 +9,23 @@ import java.util.Base64;
 
 public class Util {
     public static boolean compareHash(byte[] s1, byte[] s2) throws NoSuchAlgorithmException {
+        if (isNullEmpty(s1) || isNullEmpty(s2)) {
+            return false;
+        }
         String checksum1 = computeFingerPrint(s1, null).toLowerCase();
         String checksum2 = computeFingerPrint(s2, null).toLowerCase();
         return checksum1.equals(checksum2);
     }
 
     public static String computeFingerPrint(byte[] data, String metaData) throws NoSuchAlgorithmException {
-        byte[] combinedPlainTextBytes = null;
+        if (isNullEmpty(data)) {
+            throw new IllegalArgumentException("data must not be null or empty");
+        }
+        byte[] combinedPlainTextBytes;
         if (metaData == null) {
             combinedPlainTextBytes = ArrayUtils.addAll(data);
         } else {
-            combinedPlainTextBytes = ArrayUtils.addAll(data, metaData.getBytes());
+            combinedPlainTextBytes = ArrayUtils.addAll(data, metaData.getBytes(StandardCharsets.UTF_8));
         }
         return DigestUtils.sha256Hex(combinedPlainTextBytes);
     }

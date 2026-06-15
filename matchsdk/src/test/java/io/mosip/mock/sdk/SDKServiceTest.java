@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import java.util.Map;
 
 import io.mosip.biometrics.util.finger.FingerPosition;
 import io.mosip.biometrics.util.iris.EyeLabel;
+import io.mosip.mock.sdk.util.Util;
 import io.mosip.kernel.biometrics.constant.BiometricType;
 import io.mosip.kernel.biometrics.constant.PurposeType;
 import io.mosip.kernel.biometrics.entities.BDBInfo;
@@ -69,6 +71,10 @@ public class SDKServiceTest {
 
         public boolean callIsValidFaceBdb(PurposeType purposeType, String bioSubType, String bdbData) {
             return isValidFaceBdb(purposeType, bioSubType, bdbData);
+        }
+
+        public boolean callIsValidBirData(BIR bir) {
+            return isValidBirData(bir);
         }
     }
 
@@ -485,7 +491,7 @@ public class SDKServiceTest {
     }
 
     @Test
-    public void match_nullSample_returnsUnknownErrorStatus() {
+    public void match_nullSample_returnsMissingInputStatus() {
         BiometricRecord gallery = buildRecord(BiometricType.FINGER, "Left IndexFinger", new byte[]{1});
 
         Response<?> response = new SampleSDK().match(
@@ -493,7 +499,7 @@ public class SDKServiceTest {
                 Collections.singletonList(BiometricType.FINGER), new HashMap<>());
 
         Assert.assertNotNull(response);
-        Assert.assertEquals(ResponseStatus.UNKNOWN_ERROR.getStatusCode(), (int) response.getStatusCode());
+        Assert.assertEquals(ResponseStatus.MISSING_INPUT.getStatusCode(), (int) response.getStatusCode());
     }
 
     @Test
@@ -798,6 +804,60 @@ public class SDKServiceTest {
         bdb[58] = 0x04; // faceImageType=4 (INVALID: {0-3,128-130} valid)
         // remaining bytes all zero (imageDataType=0 already covered, imageColorSpace=0 covered)
         return bdb;
+    }
+
+    // ========== getBioSegmentMap null-input paths ==========
+
+    @Test(expected = SDKException.class)
+    public void getBioSegmentMap_nullRecord_throwsSDKException() {
+        service.callGetBioSegmentMap(null, Collections.emptyList());
+    }
+
+    @Test(expected = SDKException.class)
+    public void getBioSegmentMap_nullSegments_throwsSDKException() {
+        BiometricRecord record = new BiometricRecord();
+        record.setSegments(null); // explicitly set to null
+        service.callGetBioSegmentMap(record, Collections.emptyList());
+    }
+
+    // ========== isValidBirData null/empty BdbInfo branches ==========
+
+    @Test(expected = SDKException.class)
+    public void isValidBirData_nullBdbInfo_throwsSDKException() {
+        BIR.BIRBuilder builder = new BIR.BIRBuilder();
+        builder.withVersion(new VersionType(1, 1));
+        builder.withCbeffversion(new VersionType(1, 1));
+        // withBdbInfo intentionally omitted → BdbInfo is null
+        BIR bir = new BIR(builder);
+        service.callIsValidBirData(bir);
+    }
+
+    @Test(expected = SDKException.class)
+    public void isValidBirData_emptyTypeList_throwsSDKException() {
+        BIR.BIRBuilder builder = new BIR.BIRBuilder();
+        builder.withVersion(new VersionType(1, 1));
+        builder.withCbeffversion(new VersionType(1, 1));
+        BDBInfo.BDBInfoBuilder bdbInfoBuilder = new BDBInfo.BDBInfoBuilder();
+        bdbInfoBuilder.withType(Collections.emptyList());
+        bdbInfoBuilder.withSubtype(Collections.emptyList());
+        builder.withBdbInfo(new BDBInfo(bdbInfoBuilder));
+        builder.withBdb(new byte[]{1});
+        BIR bir = new BIR(builder);
+        service.callIsValidBirData(bir);
+    }
+
+    // ========== Util.computeFingerPrint coverage ==========
+
+    @Test(expected = IllegalArgumentException.class)
+    public void util_computeFingerPrint_nullData_throwsIllegalArgumentException() throws NoSuchAlgorithmException {
+        Util.computeFingerPrint(null, null);
+    }
+
+    @Test
+    public void util_computeFingerPrint_withNonNullMetaData_returnsHash() throws NoSuchAlgorithmException {
+        String hash = Util.computeFingerPrint(new byte[]{1, 2, 3}, "metadata");
+        Assert.assertNotNull(hash);
+        Assert.assertEquals(64, hash.length()); // SHA-256 hex is always 64 chars
     }
 
     // ========== base64 decode catch blocks ==========

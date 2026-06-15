@@ -44,7 +44,12 @@ public class ExtractTemplateService extends SDKService{
 
             for (BIR segment : sample.getSegments()) {
                 if (!isValidBirData(segment))
-                    break;
+                    continue;
+
+                if (segment.getBirInfo() == null) {
+                    responseStatus = ResponseStatus.MISSING_INPUT;
+                    throw new SDKException(String.valueOf(responseStatus.getStatusCode()), responseStatus.getStatusMessage());
+                }
 
                 segment.getBirInfo().setPayload(segment.getBdb());
                 BDBInfo bdbInfo = segment.getBdbInfo();
