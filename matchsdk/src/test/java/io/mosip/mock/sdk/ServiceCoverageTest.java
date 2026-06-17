@@ -9,6 +9,9 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import io.mosip.kernel.biometrics.constant.BiometricType;
+
+
+import io.mosip.kernel.biometrics.constant.Match;
 import io.mosip.kernel.biometrics.entities.BDBInfo;
 import io.mosip.kernel.biometrics.entities.BIR;
 import io.mosip.kernel.biometrics.entities.BIRInfo;

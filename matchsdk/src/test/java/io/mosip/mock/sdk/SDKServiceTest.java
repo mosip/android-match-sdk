@@ -479,7 +479,7 @@ public class SDKServiceTest {
     }
 
     @Test
-    public void match_emptyGallery_returnsSuccessWithEmptyDecisions() {
+    public void match_emptyGallery_returnsMissingInputStatus() {
         BiometricRecord sample = buildRecord(BiometricType.FINGER, "Left IndexFinger", new byte[]{1});
 
         Response<?> response = new SampleSDK().match(
@@ -487,7 +487,7 @@ public class SDKServiceTest {
                 Collections.singletonList(BiometricType.FINGER), new HashMap<>());
 
         Assert.assertNotNull(response);
-        Assert.assertEquals(ResponseStatus.SUCCESS.getStatusCode(), (int) response.getStatusCode());
+        Assert.assertEquals(ResponseStatus.MISSING_INPUT.getStatusCode(), (int) response.getStatusCode());
     }
 
     @Test

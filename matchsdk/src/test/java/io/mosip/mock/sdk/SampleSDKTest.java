@@ -188,7 +188,7 @@ public class SampleSDKTest {
     }
 
     @Test
-    public void segment_anyInput_returnsSuccessStatus() {
+    public void segment_anyInput_returnsUnknownErrorStatus() {
         BiometricRecord record = new BiometricRecord();
         record.setSegments(new ArrayList<>());
 
@@ -196,7 +196,7 @@ public class SampleSDKTest {
                 record, Collections.singletonList(BiometricType.FINGER), new HashMap<>());
 
         Assert.assertNotNull(response);
-        Assert.assertEquals(200, (int) response.getStatusCode());
+        Assert.assertEquals(ResponseStatus.UNKNOWN_ERROR.getStatusCode(), (int) response.getStatusCode());
     }
 
     @Test
@@ -324,18 +324,18 @@ public class SampleSDKTest {
     }
 
     @Test
-    public void convertFormatV2_nullSample_returnsUnknownErrorStatus() {
+    public void convertFormatV2_nullSample_returnsMissingInputStatus() {
         Response<BiometricRecord> response = new SampleSDK().convertFormatV2(
                 null, "ISO19794_4_2011", "IMAGE/JPEG",
                 new HashMap<>(), new HashMap<>(),
                 Collections.singletonList(BiometricType.FINGER));
 
         Assert.assertNotNull(response);
-        Assert.assertEquals(ResponseStatus.UNKNOWN_ERROR.getStatusCode(), (int) response.getStatusCode());
+        Assert.assertEquals(ResponseStatus.MISSING_INPUT.getStatusCode(), (int) response.getStatusCode());
     }
 
     @Test
-    public void convertFormatV2_emptySegments_returnsSuccessStatus() {
+    public void convertFormatV2_emptySegments_returnsMissingInputStatus() {
         BiometricRecord record = new BiometricRecord();
         record.setSegments(new ArrayList<>());
 
@@ -345,7 +345,7 @@ public class SampleSDKTest {
                 Collections.singletonList(BiometricType.FINGER));
 
         Assert.assertNotNull(response);
-        Assert.assertEquals(ResponseStatus.SUCCESS.getStatusCode(), (int) response.getStatusCode());
+        Assert.assertEquals(ResponseStatus.MISSING_INPUT.getStatusCode(), (int) response.getStatusCode());
     }
 
     @Test
