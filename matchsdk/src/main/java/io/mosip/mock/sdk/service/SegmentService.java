@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import io.mosip.kernel.biometrics.constant.BiometricType;
 import io.mosip.kernel.biometrics.entities.BiometricRecord;
 import io.mosip.kernel.biometrics.model.Response;
+import io.mosip.mock.sdk.constant.ResponseStatus;
 public class SegmentService extends SDKService{
     private Logger LOGGER = LoggerFactory.getLogger(SegmentService.class);
 
@@ -22,12 +23,11 @@ public class SegmentService extends SDKService{
     }
 
     public Response<BiometricRecord> getSegmentInfo() {
-        BiometricRecord record = new BiometricRecord();
-        record.setSegments(null);
         Response<BiometricRecord> response = new Response<>();
         // do actual Segmentation
-        response.setStatusCode(200);
-        response.setResponse(record);
+        response.setStatusCode(ResponseStatus.UNKNOWN_ERROR.getStatusCode());
+        response.setStatusMessage(ResponseStatus.UNKNOWN_ERROR.getStatusMessage());
+        response.setResponse(null);
         return response;
     }
 }

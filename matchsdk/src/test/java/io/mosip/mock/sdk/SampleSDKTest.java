@@ -3,6 +3,7 @@ package io.mosip.mock.sdk;
 import static java.lang.Integer.parseInt;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -261,7 +262,7 @@ public class SampleSDKTest {
         } catch (ParserConfigurationException | IOException | SAXException e) {
             Assert.fail(e.getMessage());
         } catch (Throwable e) {
-            // CommonUtil static initializer fails in JVM test environment (Android-only class)
+            Assume.assumeNoException("Skipped: Android-only class unavailable in JVM test environment", e);
         }
     }
 
@@ -280,7 +281,7 @@ public class SampleSDKTest {
         } catch (ParserConfigurationException | IOException | SAXException e) {
             Assert.fail(e.getMessage());
         } catch (Throwable e) {
-            // CommonUtil static initializer fails in JVM test environment (Android-only class)
+            Assume.assumeNoException("Skipped: Android-only class unavailable in JVM test environment", e);
         }
     }
 
@@ -299,7 +300,7 @@ public class SampleSDKTest {
         } catch (ParserConfigurationException | IOException | SAXException e) {
             Assert.fail(e.getMessage());
         } catch (Throwable e) {
-            // CommonUtil static initializer fails in JVM test environment (Android-only class)
+            Assume.assumeNoException("Skipped: Android-only class unavailable in JVM test environment", e);
         }
     }
 

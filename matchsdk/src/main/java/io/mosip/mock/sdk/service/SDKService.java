@@ -67,6 +67,8 @@ public abstract class SDKService {
 
         Map<BiometricType, List<BIR>> bioSegmentMap = new HashMap<>();
         for (BIR segment : record.getSegments()) {
+            if (segment == null)
+                continue;
             if (segment.getBdbInfo() == null || segment.getBdbInfo().getType() == null
                     || segment.getBdbInfo().getType().isEmpty())
                 continue;
@@ -87,6 +89,10 @@ public abstract class SDKService {
     }
 
     protected boolean isValidBirData(BIR bir) {
+        if (bir == null) {
+            ResponseStatus status = ResponseStatus.INVALID_INPUT;
+            throw new SDKException(String.valueOf(status.getStatusCode()), status.getStatusMessage());
+        }
         if (bir.getBdbInfo() == null
                 || bir.getBdbInfo().getType() == null
                 || bir.getBdbInfo().getType().isEmpty()) {

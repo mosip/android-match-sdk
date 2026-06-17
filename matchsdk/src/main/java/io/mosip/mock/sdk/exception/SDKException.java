@@ -19,8 +19,7 @@ public class SDKException extends BaseUncheckedException{
      * @param errorMessage The error message for this exception
      */
     public SDKException(String errorCode, String errorMessage) {
-        super(errorMessage);
-        addInfo(errorCode, errorMessage);
+        super(errorCode, errorMessage);
     }
 
     /**

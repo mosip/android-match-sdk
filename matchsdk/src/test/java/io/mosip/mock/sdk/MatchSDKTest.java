@@ -80,12 +80,12 @@ public class MatchSDKTest {
             Response<MatchDecision
                     []> response = new SampleSDK().match(sampleRecord, gallery, modalitiesToMatch, new HashMap<>());
 
-            if (response != null && response.getResponse() != null) {
-                for (MatchDecision decision : response.getResponse()) {
-                    Map<BiometricType, Decision> decisions = decision.getDecisions();
-                    Assert.assertEquals(Match.MATCHED.toString(),
-                            Objects.requireNonNull(decisions.get(BiometricType.IRIS)).getMatch().toString());
-                }
+            Assert.assertNotNull(response);
+            Assert.assertNotNull(response.getResponse());
+            for (MatchDecision decision : response.getResponse()) {
+                Map<BiometricType, Decision> decisions = decision.getDecisions();
+                Assert.assertEquals(Match.MATCHED.toString(),
+                        Objects.requireNonNull(decisions.get(BiometricType.IRIS)).getMatch().toString());
             }
         } catch (ParserConfigurationException | IOException | SAXException e) {
             Assert.fail(e.getMessage());
@@ -104,12 +104,12 @@ public class MatchSDKTest {
 
             Response<MatchDecision[]> response = new SampleSDK().match(sampleRecord, gallery, modalitiesToMatch, new HashMap<>());
 
-            if (response != null && response.getResponse() != null) {
-                for (MatchDecision decision : response.getResponse()) {
-                    Map<BiometricType, Decision> decisions = decision.getDecisions();
-                    Assert.assertEquals(Match.NOT_MATCHED.toString(),
-                            Objects.requireNonNull(decisions.get(BiometricType.IRIS)).getMatch().toString());
-                }
+            Assert.assertNotNull(response);
+            Assert.assertNotNull(response.getResponse());
+            for (MatchDecision decision : response.getResponse()) {
+                Map<BiometricType, Decision> decisions = decision.getDecisions();
+                Assert.assertEquals(Match.NOT_MATCHED.toString(),
+                        Objects.requireNonNull(decisions.get(BiometricType.IRIS)).getMatch().toString());
             }
         } catch (ParserConfigurationException | IOException | SAXException e) {
             Assert.fail(e.getMessage());
@@ -130,16 +130,16 @@ public class MatchSDKTest {
 
             Response<MatchDecision[]> response = new SampleSDK().match(sampleRecord, gallery, modalitiesToMatch, new HashMap<>());
 
-            if (response != null && response.getResponse() != null) {
-                for (MatchDecision decision : response.getResponse()) {
-                    Map<BiometricType, Decision> decisions = decision.getDecisions();
-                    Assert.assertEquals(Match.MATCHED.toString(),
-                            Objects.requireNonNull(decisions.get(BiometricType.FACE)).getMatch().toString());
-                    Assert.assertEquals(Match.MATCHED.toString(),
-                            Objects.requireNonNull(decisions.get(BiometricType.FINGER)).getMatch().toString());
-                    Assert.assertEquals(Match.MATCHED.toString(),
-                            Objects.requireNonNull(decisions.get(BiometricType.IRIS)).getMatch().toString());
-                }
+            Assert.assertNotNull(response);
+            Assert.assertNotNull(response.getResponse());
+            for (MatchDecision decision : response.getResponse()) {
+                Map<BiometricType, Decision> decisions = decision.getDecisions();
+                Assert.assertEquals(Match.MATCHED.toString(),
+                        Objects.requireNonNull(decisions.get(BiometricType.FACE)).getMatch().toString());
+                Assert.assertEquals(Match.MATCHED.toString(),
+                        Objects.requireNonNull(decisions.get(BiometricType.FINGER)).getMatch().toString());
+                Assert.assertEquals(Match.MATCHED.toString(),
+                        Objects.requireNonNull(decisions.get(BiometricType.IRIS)).getMatch().toString());
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
             Assert.fail(e.getMessage());
@@ -160,12 +160,12 @@ public class MatchSDKTest {
 
             Response<MatchDecision[]> response = new SampleSDK().match(sampleRecord, gallery, modalitiesToMatch, new HashMap<>());
 
-            if (response != null && response.getResponse() != null) {
-                for (MatchDecision decision : response.getResponse()) {
-                    Map<BiometricType, Decision> decisions = decision.getDecisions();
-                    Assert.assertEquals(Match.NOT_MATCHED.toString(),
-                            Objects.requireNonNull(decisions.get(BiometricType.FINGER)).getMatch().toString());
-                }
+            Assert.assertNotNull(response);
+            Assert.assertNotNull(response.getResponse());
+            for (MatchDecision decision : response.getResponse()) {
+                Map<BiometricType, Decision> decisions = decision.getDecisions();
+                Assert.assertEquals(Match.NOT_MATCHED.toString(),
+                        Objects.requireNonNull(decisions.get(BiometricType.FINGER)).getMatch().toString());
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
             Assert.fail(e.getMessage());
@@ -186,16 +186,16 @@ public class MatchSDKTest {
 
             Response<MatchDecision[]> response = new SampleSDK().match(sampleRecord, gallery, modalitiesToMatch, new HashMap<>());
 
-            if (response != null && response.getResponse() != null) {
-                for (MatchDecision decision : response.getResponse()) {
-                    Map<BiometricType, Decision> decisions = decision.getDecisions();
-                    Assert.assertEquals(Match.MATCHED.toString(),
-                            Objects.requireNonNull(decisions.get(BiometricType.FACE)).getMatch().toString());
-                    Assert.assertEquals(Match.MATCHED.toString(),
-                            Objects.requireNonNull(decisions.get(BiometricType.FINGER)).getMatch().toString());
-                    Assert.assertEquals(Match.MATCHED.toString(),
-                            Objects.requireNonNull(decisions.get(BiometricType.IRIS)).getMatch().toString());
-                }
+            Assert.assertNotNull(response);
+            Assert.assertNotNull(response.getResponse());
+            for (MatchDecision decision : response.getResponse()) {
+                Map<BiometricType, Decision> decisions = decision.getDecisions();
+                Assert.assertEquals(Match.MATCHED.toString(),
+                        Objects.requireNonNull(decisions.get(BiometricType.FACE)).getMatch().toString());
+                Assert.assertEquals(Match.MATCHED.toString(),
+                        Objects.requireNonNull(decisions.get(BiometricType.FINGER)).getMatch().toString());
+                Assert.assertEquals(Match.MATCHED.toString(),
+                        Objects.requireNonNull(decisions.get(BiometricType.IRIS)).getMatch().toString());
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
             Assert.fail(e.getMessage());
@@ -216,16 +216,16 @@ public class MatchSDKTest {
 
             Response<MatchDecision[]> response = new SampleSDK().match(sampleRecord, gallery, modalitiesToMatch, new HashMap<>());
 
-            if (response != null && response.getResponse() != null) {
-                for (MatchDecision decision : response.getResponse()) {
-                    Map<BiometricType, Decision> decisions = decision.getDecisions();
-                    Assert.assertEquals(Match.MATCHED.toString(),
-                            Objects.requireNonNull(decisions.get(BiometricType.FACE)).getMatch().toString());
-                    Assert.assertEquals(Match.MATCHED.toString(),
-                            Objects.requireNonNull(decisions.get(BiometricType.FINGER)).getMatch().toString());
-                    Assert.assertEquals(Match.MATCHED.toString(),
-                            Objects.requireNonNull(decisions.get(BiometricType.IRIS)).getMatch().toString());
-                }
+            Assert.assertNotNull(response);
+            Assert.assertNotNull(response.getResponse());
+            for (MatchDecision decision : response.getResponse()) {
+                Map<BiometricType, Decision> decisions = decision.getDecisions();
+                Assert.assertEquals(Match.MATCHED.toString(),
+                        Objects.requireNonNull(decisions.get(BiometricType.FACE)).getMatch().toString());
+                Assert.assertEquals(Match.MATCHED.toString(),
+                        Objects.requireNonNull(decisions.get(BiometricType.FINGER)).getMatch().toString());
+                Assert.assertEquals(Match.MATCHED.toString(),
+                        Objects.requireNonNull(decisions.get(BiometricType.IRIS)).getMatch().toString());
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
             Assert.fail(e.getMessage());
@@ -246,16 +246,16 @@ public class MatchSDKTest {
 
             Response<MatchDecision[]> response = new SampleSDK().match(sampleRecord, gallery, modalitiesToMatch, new HashMap<>());
 
-            if (response != null && response.getResponse() != null) {
-                for (MatchDecision decision : response.getResponse()) {
-                    Map<BiometricType, Decision> decisions = decision.getDecisions();
-                    Assert.assertEquals(Match.MATCHED.toString(),
-                            Objects.requireNonNull(decisions.get(BiometricType.FACE)).getMatch().toString());
-                    Assert.assertEquals(Match.MATCHED.toString(),
-                            Objects.requireNonNull(decisions.get(BiometricType.FINGER)).getMatch().toString());
-                    Assert.assertEquals(Match.MATCHED.toString(),
-                            Objects.requireNonNull(decisions.get(BiometricType.IRIS)).getMatch().toString());
-                }
+            Assert.assertNotNull(response);
+            Assert.assertNotNull(response.getResponse());
+            for (MatchDecision decision : response.getResponse()) {
+                Map<BiometricType, Decision> decisions = decision.getDecisions();
+                Assert.assertEquals(Match.MATCHED.toString(),
+                        Objects.requireNonNull(decisions.get(BiometricType.FACE)).getMatch().toString());
+                Assert.assertEquals(Match.MATCHED.toString(),
+                        Objects.requireNonNull(decisions.get(BiometricType.FINGER)).getMatch().toString());
+                Assert.assertEquals(Match.MATCHED.toString(),
+                        Objects.requireNonNull(decisions.get(BiometricType.IRIS)).getMatch().toString());
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
             Assert.fail(e.getMessage());
@@ -276,16 +276,16 @@ public class MatchSDKTest {
 
             Response<MatchDecision[]> response = new SampleSDK().match(sampleRecord, gallery, modalitiesToMatch, new HashMap<>());
 
-            if (response != null && response.getResponse() != null) {
-                for (MatchDecision decision : response.getResponse()) {
-                    Map<BiometricType, Decision> decisions = decision.getDecisions();
-                    Assert.assertEquals(Match.MATCHED.toString(),
-                            Objects.requireNonNull(decisions.get(BiometricType.FACE)).getMatch().toString());
-                    Assert.assertEquals(Match.MATCHED.toString(),
-                            Objects.requireNonNull(decisions.get(BiometricType.FINGER)).getMatch().toString());
-                    Assert.assertEquals(Match.MATCHED.toString(),
-                            Objects.requireNonNull(decisions.get(BiometricType.IRIS)).getMatch().toString());
-                }
+            Assert.assertNotNull(response);
+            Assert.assertNotNull(response.getResponse());
+            for (MatchDecision decision : response.getResponse()) {
+                Map<BiometricType, Decision> decisions = decision.getDecisions();
+                Assert.assertEquals(Match.MATCHED.toString(),
+                        Objects.requireNonNull(decisions.get(BiometricType.FACE)).getMatch().toString());
+                Assert.assertEquals(Match.MATCHED.toString(),
+                        Objects.requireNonNull(decisions.get(BiometricType.FINGER)).getMatch().toString());
+                Assert.assertEquals(Match.MATCHED.toString(),
+                        Objects.requireNonNull(decisions.get(BiometricType.IRIS)).getMatch().toString());
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
             Assert.fail(e.getMessage());
@@ -304,12 +304,12 @@ public class MatchSDKTest {
 
             Response<MatchDecision[]> response = new SampleSDK().match(sampleRecord, gallery, modalitiesToMatch, new HashMap<>());
 
-            if (response != null && response.getResponse() != null) {
-                for (MatchDecision decision : response.getResponse()) {
-                    Map<BiometricType, Decision> decisions = decision.getDecisions();
-                    Assert.assertEquals(Match.MATCHED.toString(),
-                            Objects.requireNonNull(decisions.get(BiometricType.FINGER)).getMatch().toString());
-                }
+            Assert.assertNotNull(response);
+            Assert.assertNotNull(response.getResponse());
+            for (MatchDecision decision : response.getResponse()) {
+                Map<BiometricType, Decision> decisions = decision.getDecisions();
+                Assert.assertEquals(Match.MATCHED.toString(),
+                        Objects.requireNonNull(decisions.get(BiometricType.FINGER)).getMatch().toString());
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
             Assert.fail(e.getMessage());
@@ -328,12 +328,12 @@ public class MatchSDKTest {
 
             Response<MatchDecision[]> response = new SampleSDK().match(sampleRecord, gallery, modalitiesToMatch, new HashMap<>());
 
-            if (response != null && response.getResponse() != null) {
-                for (MatchDecision decision : response.getResponse()) {
-                    Map<BiometricType, Decision> decisions = decision.getDecisions();
-                    Assert.assertEquals(Match.MATCHED.toString(),
-                            Objects.requireNonNull(decisions.get(BiometricType.FINGER)).getMatch().toString());
-                }
+            Assert.assertNotNull(response);
+            Assert.assertNotNull(response.getResponse());
+            for (MatchDecision decision : response.getResponse()) {
+                Map<BiometricType, Decision> decisions = decision.getDecisions();
+                Assert.assertEquals(Match.MATCHED.toString(),
+                        Objects.requireNonNull(decisions.get(BiometricType.FINGER)).getMatch().toString());
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
             Assert.fail(e.getMessage());
@@ -352,12 +352,12 @@ public class MatchSDKTest {
 
             Response<MatchDecision[]> response = new SampleSDK().match(sampleRecord, gallery, modalitiesToMatch, new HashMap<>());
 
-            if (response != null && response.getResponse() != null) {
-                for (MatchDecision decision : response.getResponse()) {
-                    Map<BiometricType, Decision> decisions = decision.getDecisions();
-                    Assert.assertEquals(Match.MATCHED.toString(),
-                            Objects.requireNonNull(decisions.get(BiometricType.FACE)).getMatch().toString());
-                }
+            Assert.assertNotNull(response);
+            Assert.assertNotNull(response.getResponse());
+            for (MatchDecision decision : response.getResponse()) {
+                Map<BiometricType, Decision> decisions = decision.getDecisions();
+                Assert.assertEquals(Match.MATCHED.toString(),
+                        Objects.requireNonNull(decisions.get(BiometricType.FACE)).getMatch().toString());
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
             Assert.fail(e.getMessage());
@@ -376,12 +376,12 @@ public class MatchSDKTest {
 
             Response<MatchDecision[]> response = new SampleSDK().match(sampleRecord, gallery, modalitiesToMatch, new HashMap<>());
 
-            if (response != null && response.getResponse() != null) {
-                for (MatchDecision decision : response.getResponse()) {
-                    Map<BiometricType, Decision> decisions = decision.getDecisions();
-                    Assert.assertEquals(Match.NOT_MATCHED.toString(),
-                            Objects.requireNonNull(decisions.get(BiometricType.FACE)).getMatch().toString());
-                }
+            Assert.assertNotNull(response);
+            Assert.assertNotNull(response.getResponse());
+            for (MatchDecision decision : response.getResponse()) {
+                Map<BiometricType, Decision> decisions = decision.getDecisions();
+                Assert.assertEquals(Match.NOT_MATCHED.toString(),
+                        Objects.requireNonNull(decisions.get(BiometricType.FACE)).getMatch().toString());
             }
         } catch (ParserConfigurationException | IOException | SAXException e) {
             Assert.fail(e.getMessage());
@@ -537,7 +537,7 @@ public class MatchSDKTest {
     // ========== NPE catch in doMatch ==========
 
     @Test
-    public void match_galleryFingerWithNullSubtypeElement_coversNpeCatch() {
+    public void match_galleryFingerWithNullSubtypeElement_returnsNotMatched() {
         try {
             byte[] fingerBdb = extractFirstBdb(testMatchSDKPath, BiometricType.FINGER);
             Assert.assertNotNull("Need a FINGER segment in test_sdk.xml", fingerBdb);
@@ -545,8 +545,7 @@ public class MatchSDKTest {
             // Sample: named subtype → enters the named-subtype gallery loop
             BiometricRecord sample = buildSingleBirRecord(BiometricType.FINGER, "Left IndexFinger", fingerBdb);
 
-            // Gallery: subtype list has a null element → get(0).equals(...) throws NPE
-            // → caught by catch(NullPointerException ex) in doMatch → Match.ERROR
+            // Gallery: subtype list has a null element → null guard skips segment → bio_found=false → NOT_MATCHED
             BIR.BIRBuilder galleryBuilder = new BIR.BIRBuilder();
             galleryBuilder.withVersion(new VersionType(1, 1));
             galleryBuilder.withCbeffversion(new VersionType(1, 1));
@@ -566,6 +565,9 @@ public class MatchSDKTest {
 
             Assert.assertNotNull(response);
             Assert.assertEquals(200, (int) response.getStatusCode());
+            MatchDecision[] decisions = response.getResponse();
+            Assert.assertNotNull(decisions);
+            Assert.assertEquals(Match.NOT_MATCHED, decisions[0].getDecisions().get(BiometricType.FINGER).getMatch());
         } catch (Exception e) {
             Assert.fail(e.getMessage());
         }

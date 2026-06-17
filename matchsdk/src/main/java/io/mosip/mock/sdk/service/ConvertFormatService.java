@@ -48,6 +48,10 @@ public class ConvertFormatService extends SDKService{
 
         Map<String, String> responseValues = null;
         try {
+            if (sample == null || sample.getSegments() == null || sample.getSegments().isEmpty()) {
+                ResponseStatus responseStatus = ResponseStatus.MISSING_INPUT;
+                throw new SDKException(String.valueOf(responseStatus.getStatusCode()), responseStatus.getStatusMessage());
+            }
             Map<String, String> values = new HashMap<>();
             for (BIR segment : sample.getSegments()) {
 
@@ -67,6 +71,8 @@ public class ConvertFormatService extends SDKService{
                 String key = bioType + "_" + bioSubType;
                 // ignore modalities that are not to be matched
                 if (!isValidBioTypeForSourceFormat(bioType, sourceFormat))
+                    continue;
+                if (modalitiesToConvert != null && !modalitiesToConvert.isEmpty() && !modalitiesToConvert.contains(bioType))
                     continue;
 
                 if (!values.containsKey(key)) {
@@ -95,9 +101,13 @@ public class ConvertFormatService extends SDKService{
                 // ignore modalities that are not to be matched
                 if (!isValidBioTypeForSourceFormat(bioType, sourceFormat))
                     continue;
+                if (modalitiesToConvert != null && !modalitiesToConvert.isEmpty() && !modalitiesToConvert.contains(bioType))
+                    continue;
 
                 if (responseValues != null && responseValues.containsKey(key)) {
-                    segment.getBirInfo().setPayload(segment.getBdb());
+                    if (segment.getBirInfo() != null) {
+                        segment.getBirInfo().setPayload(segment.getBdb());
+                    }
                     segment.setBdb(Util.decodeURLSafeBase64(responseValues.get(key)));
                 }
                 birList.set(index, segment);

@@ -35,6 +35,10 @@ public class ConverterServiceImpl implements IConverterApi {
 
     @Override
     public Map<String, String> convert(Map<String, String> values, String sourceFormat, String targetFormat, Map<String, String> sourceParameters, Map<String, String> targetParameters) throws ConversionException {
+        if (values == null || sourceFormat == null || targetFormat == null) {
+            ConverterErrorCode errorCode = ConverterErrorCode.INPUT_SOURCE_EXCEPTION;
+            throw new ConversionException(errorCode.getErrorCode(), errorCode.getErrorMessage());
+        }
         ConverterErrorCode errorCode = null;
         Map<String, String> targetValues = new HashMap<String, String>();
 

@@ -46,6 +46,10 @@ public class ExtractTemplateService extends SDKService{
                 if (!isValidBirData(segment))
                     continue;
 
+                BiometricType bioType = segment.getBdbInfo().getType().get(0);
+                if (modalitiesToExtract != null && !modalitiesToExtract.isEmpty() && !modalitiesToExtract.contains(bioType))
+                    continue;
+
                 if (segment.getBirInfo() == null) {
                     responseStatus = ResponseStatus.MISSING_INPUT;
                     throw new SDKException(String.valueOf(responseStatus.getStatusCode()), responseStatus.getStatusMessage());

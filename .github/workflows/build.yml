@@ -2,9 +2,6 @@ name: Build AAR
 
 on:
   workflow_dispatch:
-    branches:
-      - release*
-      - develop
   push:
     branches:
       - master

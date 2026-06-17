@@ -91,6 +91,10 @@ public class MatchService extends SDKService{
 
     private Response<MatchDecision[]> doMatch(BiometricRecord sample, BiometricRecord[] gallery,
                                               List<BiometricType> modalitiesToMatch, Map<String, String> flags) throws Exception {
+        if (sample == null || gallery == null || gallery.length == 0) {
+            ResponseStatus responseStatus = ResponseStatus.MISSING_INPUT;
+            throw new SDKException(String.valueOf(responseStatus.getStatusCode()), responseStatus.getStatusMessage());
+        }
         int index = 0;
         MatchDecision[] matchDecision = new MatchDecision[gallery.length];
         Response<MatchDecision[]> response = new Response<>();
@@ -101,19 +105,19 @@ public class MatchService extends SDKService{
             Map<BiometricType, List<BIR>> recordBioSegmentMap = getBioSegmentMap(record, modalitiesToMatch);
             matchDecision[index] = new MatchDecision(index);
             Map<BiometricType, Decision> decisions = new HashMap<>();
-            Decision decision = new Decision();
             LOGGER.info("Comparing sample with gallery index " + index + " ----------------------------------");
             for (BiometricType modality : sampleBioSegmentMap.keySet()) {
+                Decision modalityDecision;
                 try {
-                    decision = compareModality(modality, sampleBioSegmentMap.get(modality),
+                    modalityDecision = compareModality(modality, sampleBioSegmentMap.get(modality),
                             recordBioSegmentMap.get(modality));
                 } catch (NoSuchAlgorithmException | NullPointerException ex) {
-                    ex.printStackTrace();
-                    decision.setMatch(Match.ERROR);
-                    decision.getErrors().add("Modality " + modality.name() + " threw an exception:" + ex.getMessage());
-                } finally {
-                    decisions.put(modality, decision);
+                    modalityDecision = new Decision();
+                    modalityDecision.setMatch(Match.ERROR);
+                    modalityDecision.setErrors(new ArrayList<>());
+                    modalityDecision.getErrors().add("Modality " + modality.name() + " threw an exception: " + ex.getMessage());
                 }
+                decisions.put(modality, modalityDecision);
             }
             matchDecision[index].setDecisions(decisions);
             index++;
@@ -182,6 +186,10 @@ public class MatchService extends SDKService{
                     && !sampleBIR.getBdbInfo().getSubtype().get(0).isEmpty()
                     && !sampleBIR.getBdbInfo().getSubtype().get(0).contains("UNKNOWN")) {
                 for (BIR galleryBIR : gallerySegments) {
+                    if (galleryBIR.getBdbInfo() == null || galleryBIR.getBdbInfo().getSubtype() == null
+                            || galleryBIR.getBdbInfo().getSubtype().isEmpty()
+                            || galleryBIR.getBdbInfo().getSubtype().get(0) == null)
+                        continue;
                     LOGGER.info("Finger Modality: {}; Subtype: {}  Check ", galleryBIR.getBdbInfo().getSubtype().get(0),
                             sampleBIR.getBdbInfo().getSubtype().get(0));
 
@@ -288,6 +296,10 @@ public class MatchService extends SDKService{
                     && !sampleBIR.getBdbInfo().getSubtype().get(0).isEmpty()
                     && !sampleBIR.getBdbInfo().getSubtype().get(0).contains("UNKNOWN")) {
                 for (BIR galleryBIR : gallerySegments) {
+                    if (galleryBIR.getBdbInfo() == null || galleryBIR.getBdbInfo().getSubtype() == null
+                            || galleryBIR.getBdbInfo().getSubtype().isEmpty()
+                            || galleryBIR.getBdbInfo().getSubtype().get(0) == null)
+                        continue;
                     LOGGER.info("Iris Modality: {}; Subtype: {}  Check ", galleryBIR.getBdbInfo().getSubtype().get(0),
                             sampleBIR.getBdbInfo().getSubtype().get(0));
 

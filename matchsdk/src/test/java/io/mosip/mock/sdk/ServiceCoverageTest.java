@@ -468,6 +468,8 @@ public class ServiceCoverageTest {
         Response<MatchDecision[]> response = svc.getMatchDecisionInfo();
         Assert.assertNotNull(response);
         Assert.assertEquals(ResponseStatus.SUCCESS.getStatusCode(), (int) response.getStatusCode());
+        Assert.assertNotNull(response.getResponse());
+        Assert.assertEquals(Match.ERROR, response.getResponse()[0].getDecisions().get(BiometricType.FINGER).getMatch());
     }
 
     @Test
@@ -481,6 +483,8 @@ public class ServiceCoverageTest {
         Response<MatchDecision[]> response = svc.getMatchDecisionInfo();
         Assert.assertNotNull(response);
         Assert.assertEquals(ResponseStatus.SUCCESS.getStatusCode(), (int) response.getStatusCode());
+        Assert.assertNotNull(response.getResponse());
+        Assert.assertEquals(Match.ERROR, response.getResponse()[0].getDecisions().get(BiometricType.IRIS).getMatch());
     }
 
     @Test
@@ -494,6 +498,8 @@ public class ServiceCoverageTest {
         Response<MatchDecision[]> response = svc.getMatchDecisionInfo();
         Assert.assertNotNull(response);
         Assert.assertEquals(ResponseStatus.SUCCESS.getStatusCode(), (int) response.getStatusCode());
+        Assert.assertNotNull(response.getResponse());
+        Assert.assertEquals(Match.ERROR, response.getResponse()[0].getDecisions().get(BiometricType.FACE).getMatch());
     }
 
     // ===== ConvertFormatService: ConversionException INVALID_SOURCE (covers switch lines 148-162) =====
@@ -643,6 +649,8 @@ public class ServiceCoverageTest {
         Response<MatchDecision[]> response = svc.getMatchDecisionInfo();
         Assert.assertNotNull(response);
         Assert.assertEquals(ResponseStatus.SUCCESS.getStatusCode(), (int) response.getStatusCode());
+        Assert.assertNotNull(response.getResponse());
+        Assert.assertEquals(Match.NOT_MATCHED, response.getResponse()[0].getDecisions().get(BiometricType.FINGER).getMatch());
     }
 
     // ===== MatchService: UNKNOWN iris subtype compareHash=false path =====
@@ -658,6 +666,8 @@ public class ServiceCoverageTest {
         Response<MatchDecision[]> response = svc.getMatchDecisionInfo();
         Assert.assertNotNull(response);
         Assert.assertEquals(ResponseStatus.SUCCESS.getStatusCode(), (int) response.getStatusCode());
+        Assert.assertNotNull(response.getResponse());
+        Assert.assertEquals(Match.NOT_MATCHED, response.getResponse()[0].getDecisions().get(BiometricType.IRIS).getMatch());
     }
 
     // ===== MatchService: compareModality default case (lines 138-143) via SCENT modality =====
