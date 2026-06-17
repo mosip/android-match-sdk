@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) Modular Open Source Identity Platform
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
 package io.mosip.mock.sdk.service;
 
 import java.security.NoSuchAlgorithmException;
@@ -20,6 +26,7 @@ import io.mosip.kernel.biometrics.model.Response;
 import io.mosip.mock.sdk.constant.ResponseStatus;
 import io.mosip.mock.sdk.exception.SDKException;
 import io.mosip.mock.sdk.util.Util;
+
 public class MatchService extends SDKService{
     private final Logger LOGGER = LoggerFactory.getLogger(MatchService.class);
 
