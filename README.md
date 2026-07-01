@@ -1,12 +1,12 @@
 # Mock Android Match SDK
 
 ## Overview
-The `mock-android-match-sdk` repository provides an Android library implementation of `IBioApiV2` to perform 1:N match, segmentation, extraction, quality check, and format conversion of biometric data. It simulates biometric SDK behavior on-device and is designed for testing and integration within Android-based MOSIP android registration client applications.
+The `mock-android-match-sdk` repository provides an Android library implementation of `IBioApiV2` to perform 1:N match, extraction, quality check, and format conversion of biometric data. It simulates biometric SDK behavior on-device and is designed for testing and integration within Android-based MOSIP android registration client applications.
 
 ## Features
-- **Biometric Operations**: Simulates 1:N matching, segmentation, extraction, and quality checks.
-- **Format Conversion**: Supports mock conversion between biometric formats.
-- **Standard Compliance**: Implements the `IBioApiV2` interface as per MOSIP `kernel-biometrics-api` specifications.
+- **Biometric Operations**: Simulates 1:N matching, extraction, and quality checks.
+- **Format Conversion**: Converts biometric data from ISO 19794-4 (Finger), ISO 19794-5 (Face), and ISO 19794-6 (Iris) containers to JPEG or PNG images using [`bio-utils`](https://github.com/mosip/bio-utils).
+- **Standard Compliance**: Implements the `IBioApiV2` interface as per MOSIP [`kernel-biometrics-api`](https://github.com/mosip/commons/tree/master/kernel/kernel-biometrics-api) specifications.
 - **AAR Packaging**: Built and published as an Android library (AAR) for direct consumption via Gradle/Maven.
 
 ## Modules
@@ -14,7 +14,6 @@ The `mock-android-match-sdk` repository provides an Android library implementati
     - `MatchService` — 1:N match decisions
     - `CheckQualityService` — quality scoring
     - `ExtractTemplateService` — template extraction
-    - `SegmentService` — segmentation
     - `ConvertFormatService` / `ConverterServiceImpl` — format conversion
     - `SDKInfoService` — SDK metadata/version info
 - **app**: A minimal sample Android application module used as a shell for manually exercising the library.
@@ -25,7 +24,7 @@ Since `matchsdk` is a library, setting it up involves building it and including 
 ### Prerequisites
 Ensure you have the following installed before proceeding:
 - **Android Studio**: Latest stable version.
-- **JDK**: 17
+- **JDK**: 11
 - **Gradle**: Wrapper included (`./gradlew`), no separate install required.
 - **Git**: To clone the repository.
 
