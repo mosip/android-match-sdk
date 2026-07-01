@@ -1,17 +1,17 @@
 # Mock Android Match SDK
 
 ## Overview
-The `mock-android-match-sdk` repository provides an Android library implementation of `IBioApiV2` to perform 1:N match, extraction, quality check, and format conversion of biometric data. It simulates biometric SDK behavior on-device and is designed for testing and integration within Android-based MOSIP android registration client applications.
+The `mock-android-match-sdk` repository provides an Android library implementation of `IBioApiV2` to perform 1:1 and 1:N match, extraction, quality check, and format conversion of biometric data. It simulates biometric SDK behavior on-device and is designed for testing and integration within Android-based MOSIP android registration client applications.
 
 ## Features
-- **Biometric Operations**: Simulates 1:N matching, extraction, and quality checks.
+- **Biometric Operations**: Simulates 1:1 and 1:N matching, extraction, and quality checks.
 - **Format Conversion**: Converts biometric data from ISO 19794-4 (Finger), ISO 19794-5 (Face), and ISO 19794-6 (Iris) containers to JPEG or PNG images using [`bio-utils`](https://github.com/mosip/bio-utils).
 - **Standard Compliance**: Implements the `IBioApiV2` interface as per MOSIP [`kernel-biometrics-api`](https://github.com/mosip/commons/tree/master/kernel/kernel-biometrics-api) specifications.
 - **AAR Packaging**: Built and published as an Android library (AAR) for direct consumption via Gradle/Maven.
 
 ## Modules
 - **matchsdk**: The library module (`io.mosip.mock.sdk`). Main implementation class is `SampleSDK` (`io.mosip.mock.sdk.impl.SampleSDK`), which implements `IBioApiV2` and delegates to:
-    - `MatchService` — 1:N match decisions
+    - `MatchService` — 1:1 and 1:N match decisions (compares biometric byte objects)
     - `CheckQualityService` — quality scoring
     - `ExtractTemplateService` — template extraction
     - `ConvertFormatService` / `ConverterServiceImpl` — format conversion
