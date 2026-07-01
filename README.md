@@ -29,25 +29,25 @@ Ensure you have the following installed before proceeding:
 - **Git**: To clone the repository.
 
 ### Running the Application
-`matchsdk` is consumed as a Gradle/Maven dependency by Android applications that need an on-device biometric SDK implementing `IBioApiV2`. Add the published AAR (`io.mosip.registration.matchsdk:matchsdk`) as a dependency and instantiate `SampleSDK` directly in your app.
+`matchsdk` is consumed as a local AAR dependency by Android applications that need an on-device biometric SDK implementing `IBioApiV2`. Build the AAR locally (see below), add it to your project, and instantiate `SampleSDK` directly in your app.
 
 ## Build locally
 To build the library locally:
 
 1. Clone the repository:
-   ```
+   ```bash
    git clone https://github.com/mosip/mock-android-match-sdk.git
    cd mock-android-match-sdk
    ```
 
 2. Build the project:
-   ```
+   ```bash
    ./gradlew build
    ```
    This compiles both modules.
 
 3. Assemble the release AAR:
-   ```
+   ```bash
    ./gradlew :matchsdk:assembleRelease
    ```
    The AAR is generated at `matchsdk/build/outputs/aar/`.
@@ -58,7 +58,7 @@ Android Match SDK follows an implementation based on the MOSIP Biometric SDK spe
 ## Contribution & Community
 We welcome contributions from everyone!
 
-Check [here](https://docs.mosip.io/1.2.0/community/code-contributions) to learn how you can contribute code to this application.
+Check [MOSIP's code contribution guidelines](https://docs.mosip.io/1.2.0/community/code-contributions) to learn how you can contribute code to this application.
 
 If you have any questions or run into issues while trying out the application, feel free to post them in the [MOSIP Community](https://community.mosip.io/) — we'll be happy to help you out.
 
