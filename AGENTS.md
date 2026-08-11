@@ -116,7 +116,7 @@ mock-android-match-sdk/
     src/androidTest/    instrumented tests (device/emulator required)
   build.gradle           root Gradle config (AGP plugin versions only)
   settings.gradle         module includes (`app`, `matchsdk`)
-  .github/workflows/     build.yml (CI build+test), use-pr-linker.yml
+  .github/workflows/     build.yml (CI build/artifact only — does not run tests), use-pr-linker.yml
                          (auto-links PRs to issues, mosip/kattu action)
 ```
 
@@ -167,9 +167,12 @@ files. This root file is the single source of guidance.
   this AAR. Treat public API changes as breaking changes.
 - The `app` module exists only to manually exercise the library; it is not
   a substitute for unit tests and is not published anywhere.
-- Instrumented tests under `src/androidTest/` require a device or emulator
-  and are not run by the current CI workflow — treat them as
-  developer-local checks, not a CI gate.
+- Neither unit tests (`src/test/`) nor instrumented tests
+  (`src/androidTest/`) are run by the current CI workflow
+  (`.github/workflows/build.yml` only runs `:matchsdk:assembleRelease`
+  and uploads the AAR). Run `./gradlew :matchsdk:test` locally before
+  opening a PR. Instrumented tests additionally require a device or
+  emulator — treat both as developer-local checks, not a CI gate.
 
 ## Agent rules
 
