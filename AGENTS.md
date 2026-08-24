@@ -8,12 +8,12 @@ SDK behavior: 1:1 and 1:N match, quality check, template extraction, and
 format conversion (ISO 19794-4/5/6 to JPEG/PNG).
 
 This is a **mock / test-double**, not a production biometric matcher. It is
-meant to stand in for a real SBI (Standard Biometric Interface) matching
-algorithm during development and testing of Android-based MOSIP
-registration client apps, so those apps can be built and exercised without
-a real, licensed biometric SDK on hand. Do not treat any matching/quality
-logic here as representative of real biometric accuracy — it is a
-deterministic or trivial stand-in for wiring and integration testing.
+meant to stand in for a real on-device biometric SDK / matcher used by
+`android-registration-client`, so those apps can be built and exercised
+without a real, licensed biometric SDK on hand. Do not treat any
+matching/quality logic here as representative of real biometric accuracy —
+it is a deterministic or trivial stand-in for wiring and integration
+testing.
 
 The repository has two Gradle modules:
 
@@ -148,8 +148,7 @@ files. This root file is the single source of guidance.
 - A separate workflow (`use-pr-linker.yml`) auto-links PRs to GitHub issues
   via the shared `mosip/kattu` action; reference the tracking issue number
   in the PR description so that linkage works.
-- Follow MOSIP's general contribution guidelines:
-  <https://docs.mosip.io/1.2.0/community/code-contributions>
+- Follow [MOSIP's general contribution guidelines](https://docs.mosip.io/1.2.0/community/code-contributions).
 - Sign off commits (`git commit -s`) per standard MOSIP/DCO practice.
 
 ## Repository-Specific Considerations
